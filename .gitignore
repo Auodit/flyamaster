@@ -23,3 +23,4 @@ __pycache__/
 
 # VSCode (如果你用的话)
 .vscode/
+.kilocode/
