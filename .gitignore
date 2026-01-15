@@ -1,0 +1,25 @@
+MDK-ARM/Objects/
+MDK-ARM/Listings/
+MDK-ARM/DebugConfig/
+*.uvguix.*
+*.uvoptx
+*.bak
+*.dep
+*.o
+*.d
+*.crf
+*.iex
+*.htm
+*.sct
+*.map
+*.lnp
+*.axf
+*.elf
+*.hex
+*.bin
+.mxproject
+__pycache__/
+*.pyc
+
+# VSCode (如果你用的话)
+.vscode/
