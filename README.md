@@ -111,7 +111,7 @@ FLYAMASTER 是一款基于 **STM32F405RGT6** 的高性能、开源、易扩展�
 | J3 | PA9/PA10 | K210 上位机 | 921600 |
 | J4 | PC6-PC9 | 4-in-1 ESC | PWM 400Hz |
 | J5 | PC12/PD2 | 光流模块 | 115200 |
-| J6 | PC10/PC11 | VTX SmartAudio | 4800 |
+| J6 | PC10/PC11 | VTX SmartAudio | 115200  |
 | J22 | PB10/PB11 | ELRS 接收机 | 420000 (CRSF) |
 
 ---
