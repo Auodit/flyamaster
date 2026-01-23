@@ -233,8 +233,7 @@ FLYAMASTER/
 
 ## 👥 贡献者
 
-- **Q版 Doro** - 项目负责人
-- **Kilo Code** - AI 辅助开发
+- **Doro** - 项目负责人 & 开发者
 
 ---
 
