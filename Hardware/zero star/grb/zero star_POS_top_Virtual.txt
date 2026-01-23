@@ -1,0 +1,12 @@
+### Module positions - created on 2026-01-22 19:35
+### Printed by pcb_positions plugin
+## Unit = mm, Angle = deg.
+## Pcb Height 0.000mm, Pcb Width 0.000mm [based on Edge bounding box]
+## Side : top
+## Board Aux Origin: 0.000mm ,0.000mm
+# Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
+REF**         MountingHole_3.2m.. MountingHole_3.2mm_M3_DIN96.. 207.2500   -102.2500  207.2500   -102.2500     0.0    top       VIRTUAL
+REF**         MountingHole_3.2m.. MountingHole_3.2mm_M3_DIN96.. 176.7500   -71.7500   176.7500   -71.7500      0.0    top       VIRTUAL
+REF**         MountingHole_3.2m.. MountingHole_3.2mm_M3_DIN96.. 176.7500   -102.2500  176.7500   -102.2500     0.0    top       VIRTUAL
+REF**         MountingHole_3.2m.. MountingHole_3.2mm_M3_DIN96.. 207.2500   -71.7500   207.2500   -71.7500      0.0    top       VIRTUAL
+## End

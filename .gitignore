@@ -1,0 +1,49 @@
+# Keil MDK Build Output
+*.o
+*.d
+*.crf
+*.axf
+*.hex
+*.bin
+*.map
+*.htm
+*.lnp
+*.sct
+*.dep
+*.build_log.htm
+*.uvguix.*
+*.uvoptx
+*.bak
+
+# Build directories
+FLYAMASTER/MDK-ARM/FLYAMASTER/
+FLYAMASTER/MDK-ARM/build/
+FLYAMASTER/MDK-ARM/DebugConfig/
+FLYAMASTER/MDK-ARM/RTE/
+
+# IDE specific
+.vscode/
+.eide/
+.cmsis/
+*.code-workspace
+
+# Temporary files
+*.tmp
+*.temp
+*~
+
+# OS specific
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Kilocode
+.kilocode/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Logs
+*.log

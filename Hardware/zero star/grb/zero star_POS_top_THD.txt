@@ -1,0 +1,9 @@
+### Module positions - created on 2026-01-22 19:35
+### Printed by pcb_positions plugin
+## Unit = mm, Angle = deg.
+## Pcb Height 0.000mm, Pcb Width 0.000mm [based on Edge bounding box]
+## Side : top
+## Board Aux Origin: 0.000mm ,0.000mm
+# Ref         Val                 Package                       PosX       PosY       Pin1_PosX  Pin1_PosY    Rot     Side      Type
+D7            1N4148              D_DO-35_SOD27_P7.62mm_Horiz.. 115.7200   -96.8300   115.7200   -96.8300      0.0    top       THD
+## End

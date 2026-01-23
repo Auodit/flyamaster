@@ -1,0 +1,7 @@
+Can not find model defined with enviroment variable:
+${KICAD_3RD_PARTY}/EasyEDA.3dshapes/LGA-16_L3.0-W3.0-H0.9-P0.50.wrl
+Can not find model defined with enviroment variable:
+${KICAD_3RD_PARTY}/EasyEDA.3dshapes/SENSOR-SMD_SPL06-001.wrl
+Can not find model defined with enviroment variable:
+${KICAD_3RD_PARTY}/EasyEDA.3dshapes/TSSOP-28_L9.7-W4.4-P0.65-LS6.4-BL-EP-2.wrl
+[('U7', '${KICAD_3RD_PARTY}/EasyEDA.3dshapes/LGA-16_L3.0-W3.0-H0.9-P0.50.wrl'), ('U8', 'C:\\Program Files\\KiCad\\9.0\\share\\kicad\\3dmodels\\Package_SON.3dshapes\\WSON-8-1EP_8x6mm_P1.27mm_EP3.4x4.3mm.step'), ('U6', 'C:\\Program Files\\KiCad\\9.0\\share\\kicad\\3dmodels\\Package_DFN_QFN.3dshapes\\QFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.6mm.step'), ('U5', '${KICAD_3RD_PARTY}/EasyEDA.3dshapes/SENSOR-SMD_SPL06-001.wrl'), ('U9', '${KICAD_3RD_PARTY}/EasyEDA.3dshapes/TSSOP-28_L9.7-W4.4-P0.65-LS6.4-BL-EP-2.wrl'), ('J1', 'C:\\Program Files\\KiCad\\9.0\\share\\kicad\\3dmodels\\Connector_USB.3dshapes\\USB_C_Receptacle_HRO_TYPE-C-31-M-12.step')]

@@ -1,0 +1,15 @@
+### Missing 3D models - created on 2026-01-23 20:10
+### Printed by checking_3D_models plugin
+Board file: C:/Users/liang/Desktop/FLAY MASTER ZERO SATR/Hardware/zero star/zero star.kicad_pcb
+3D missing models written to:
+C:\Users\liang\Desktop\FLAY MASTER ZERO SATR\Hardware\zero star\zero star_missing3Dmodels.txt
+-------
+('U7', '${KICAD_3RD_PARTY}/EasyEDA.3dshapes/LGA-16_L3.0-W3.0-H0.9-P0.50.wrl')
+('U8', 'C:\\Program Files\\KiCad\\9.0\\share\\kicad\\3dmodels\\Package_SON.3dshapes\\WSON-8-1EP_8x6mm_P1.27mm_EP3.4x4.3mm.step')
+('U6', 'C:\\Program Files\\KiCad\\9.0\\share\\kicad\\3dmodels\\Package_DFN_QFN.3dshapes\\QFN-24-1EP_4x4mm_P0.5mm_EP2.7x2.6mm.step')
+('U5', '${KICAD_3RD_PARTY}/EasyEDA.3dshapes/SENSOR-SMD_SPL06-001.wrl')
+('U9', '${KICAD_3RD_PARTY}/EasyEDA.3dshapes/TSSOP-28_L9.7-W4.4-P0.65-LS6.4-BL-EP-2.wrl')
+('J1', 'C:\\Program Files\\KiCad\\9.0\\share\\kicad\\3dmodels\\Connector_USB.3dshapes\\USB_C_Receptacle_HRO_TYPE-C-31-M-12.step')
+-------
+NUM of 3D missing models:6
+checked extensions ['.stp', '.step', '.stpZ']
