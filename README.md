@@ -85,6 +85,12 @@ FLYAMASTER 是一款基于 **STM32F405RGT6** 的高性能、开源、易扩展�
 
 ## 📐 硬件设计
 
+### PCB 渲染图
+
+| 正面 (Top) | 反面 (Bottom) |
+|:---:|:---:|
+| ![PCB 正面](Hardware/zero%20star/zero%20star-rounded.png) | ![PCB 反面](Hardware/zero%20star/zero%20star-rounded2.png) |
+
 ### 原理图
 
 📄 **原理图 PDF**: [Hardware/zero star/zero star.pdf](Hardware/zero%20star/zero%20star.pdf)
