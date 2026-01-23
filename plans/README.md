@@ -1,9 +1,31 @@
 # 🚁 FLYAMASTER 飞控项目
 
-**项目名称**: FLYAMASTER - F405 Mini 高性能穿越机飞控  
-**版本**: v2.0.0  
-**最后更新**: 2026-01-22  
-**状态**: 🟢 开发中 (软件完成，硬件设计中)
+> ⚠️ **版权警告 / COPYRIGHT WARNING** ⚠️
+>
+> **本项目受版权保护，严格保留所有权利！**
+>
+> 🚫 **禁止** 未经授权的复制、修改、分发、商用
+> 🚫 **禁止** Fork、Clone、Download 本仓库
+> 🚫 **禁止** 转载、引用本项目任何内容
+>
+> 违者将依法追究法律责任！详见 [LICENSE](../LICENSE)
+>
+> ---
+>
+> **This project is protected by copyright. All rights strictly reserved!**
+>
+> 🚫 **PROHIBITED**: Unauthorized copying, modification, distribution, commercial use
+> 🚫 **PROHIBITED**: Fork, Clone, Download this repository
+> 🚫 **PROHIBITED**: Repost or cite any content from this project
+>
+> Violators will be prosecuted! See [LICENSE](../LICENSE)
+
+---
+
+**项目名称**: FLYAMASTER - F405 Mini 高性能穿越机飞控
+**版本**: v2.4.0
+**最后更新**: 2026-01-23
+**状态**: 🟢 开发中 (软件完成，硬件设计完成，等待验证)
 
 ---
 
@@ -155,11 +177,35 @@ FLYAMASTER/
 
 ---
 
-## 📄 许可证
+## ⚖️ 版权声明
 
-本项目采用 MIT 许可证开源。
+```
+================================================================================
+                    FLYAMASTER 飞控项目 - 版权声明
+================================================================================
+
+版权所有 (C) 2026 FLYAMASTER 项目组
+Copyright (C) 2026 FLYAMASTER Project Team
+
+                       严格保留所有权利
+                  ALL RIGHTS STRICTLY RESERVED
+
+未经版权所有者明确书面授权，严禁：
+1. 复制、下载、存储本项目的任何部分
+2. 修改、改编、翻译本项目的任何内容
+3. 分发、传播、共享本项目的任何文件
+4. 将本项目用于任何商业目的
+5. 基于本项目创建衍生作品
+6. 对本项目进行逆向工程
+7. 在任何平台转载、引用本项目内容
+
+任何未经授权的使用将被视为侵权，版权所有者保留追究法律责任的权利。
+
+详见 LICENSE 文件
+================================================================================
+```
 
 ---
 
-**文档版本**: v2.0.0  
-**最后更新**: 2026-01-22
+**文档版本**: v2.4.0
+**最后更新**: 2026-01-23
