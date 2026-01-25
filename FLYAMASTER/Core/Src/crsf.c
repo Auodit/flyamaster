@@ -1,11 +1,10 @@
 /**
  * @file crsf.c
- * @brief CRSF (Crossfire Serial Protocol) 接收机驱动实现
+ * @brief CRSF (Crossfire) 协议驱动实现 - ELRS 接收机
  * @version 1.0.0
- * @date 2026-01-23
+ * @date 2026-01-24
  *
- * @note 支持 ELRS/TBS Crossfire 原生协议
- *       使用 USART3 (PB10/PB11) @ 420000 baud
+ * @note 使用 USART3 (PB10/PB11) @ 420000 bps
  */
 
 /* Includes ------------------------------------------------------------------*/
@@ -15,17 +14,21 @@
 
 /* Private defines -----------------------------------------------------------*/
 #define CRSF_RX_BUFFER_SIZE     128     /**< DMA 接收缓冲区大小 */
-#define CRSF_TX_BUFFER_SIZE     64      /**< 发送缓冲区大小 */
 
-/* CRC8 DVB-S2 多项式 */
+/* CRC8 多项式 (DVB-S2) */
 #define CRSF_CRC8_POLY          0xD5
+
+/* Exported variables --------------------------------------------------------*/
+CRSF_RawData_t g_crsf_raw = {0};
+CRSF_RCData_t g_rc_data = {0};
+CRSF_LinkStats_t g_crsf_link = {0};
+volatile bool g_crsf_new_frame = false;
 
 /* Private variables ---------------------------------------------------------*/
 static uint8_t crsf_rx_buffer[CRSF_RX_BUFFER_SIZE];     /**< DMA 接收缓冲区 */
-static uint8_t crsf_tx_buffer[CRSF_TX_BUFFER_SIZE];     /**< 发送缓冲区 */
 static uint8_t crsf_frame_buffer[CRSF_MAX_FRAME_SIZE];  /**< 帧解析缓冲区 */
-static volatile uint16_t crsf_rx_head = 0;              /**< 接收头指针 */
-static volatile uint16_t crsf_rx_tail = 0;              /**< 接收尾指针 */
+static uint32_t crsf_last_update_tick = 0;              /**< 最后更新时间 */
+static uint32_t crsf_last_link_tick = 0;                /**< 最后链路统计时间 */
 
 /* CRC8 查找表 (DVB-S2 多项式 0xD5) */
 static const uint8_t crsf_crc8_table[256] = {
@@ -63,29 +66,11 @@ static const uint8_t crsf_crc8_table[256] = {
     0xAD, 0x78, 0xD2, 0x07, 0x53, 0x86, 0x2C, 0xF9
 };
 
-/* Exported variables --------------------------------------------------------*/
-CRSF_RawData_t g_crsf_raw = {0};
-CRSF_LinkStats_t g_crsf_stats = {0};
-RC_Data_t g_rc_data = {0};
-volatile bool g_crsf_new_frame = false;
-
 /* Private function prototypes -----------------------------------------------*/
-static void CRSF_ProcessBuffer(void);
-static bool CRSF_ValidateFrame(const uint8_t *frame, uint8_t len);
+static void CRSF_ProcessBuffer(const uint8_t *buffer, uint16_t len);
+static int8_t CRSF_RSSItoPercent(int8_t rssi_dbm);
 
 /* Exported functions --------------------------------------------------------*/
-
-/**
- * @brief 计算 CRC8 (DVB-S2 多项式)
- */
-uint8_t CRSF_CRC8(const uint8_t *data, uint8_t len)
-{
-    uint8_t crc = 0;
-    for (uint8_t i = 0; i < len; i++) {
-        crc = crsf_crc8_table[crc ^ data[i]];
-    }
-    return crc;
-}
 
 /**
  * @brief 初始化 CRSF 接收
@@ -95,28 +80,24 @@ CRSF_Status_t CRSF_Init(void)
     /* 清空缓冲区 */
     memset(crsf_rx_buffer, 0, sizeof(crsf_rx_buffer));
     memset(&g_crsf_raw, 0, sizeof(g_crsf_raw));
-    memset(&g_crsf_stats, 0, sizeof(g_crsf_stats));
     memset(&g_rc_data, 0, sizeof(g_rc_data));
+    memset(&g_crsf_link, 0, sizeof(g_crsf_link));
     
     /* 初始化默认值 */
     for (int i = 0; i < CRSF_CHANNELS; i++) {
         g_crsf_raw.channels[i] = CRSF_CHANNEL_MID;
     }
-    g_crsf_raw.channels[2] = CRSF_CHANNEL_MIN;  /* 油门默认最低 (CH3) */
+    g_crsf_raw.channels[2] = CRSF_CHANNEL_MIN;  /* 油门默认最低 */
     
     g_rc_data.connected = false;
     g_rc_data.failsafe = true;
-    g_rc_data.rssi = 0;
-    g_rc_data.link_quality = 0;
-    
-    /* 重置指针 */
-    crsf_rx_head = 0;
-    crsf_rx_tail = 0;
-    
-    /* 启用 USART3 空闲中断 */
-    __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
+    g_rc_data.rssi_warning = true;
+    g_rc_data.rssi_critical = true;
     
     /* 启动 USART3 DMA 循环接收 */
+    /* 使用空闲中断检测帧边界 */
+    __HAL_UART_ENABLE_IT(&huart3, UART_IT_IDLE);
+    
     if (HAL_UART_Receive_DMA(&huart3, crsf_rx_buffer, CRSF_RX_BUFFER_SIZE) != HAL_OK) {
         return CRSF_ERROR;
     }
@@ -132,18 +113,13 @@ void CRSF_Process(void)
     uint32_t current_tick = HAL_GetTick();
     
     /* 检查超时 */
-    if ((current_tick - g_crsf_raw.last_update_tick) > CRSF_TIMEOUT_MS) {
+    if ((current_tick - crsf_last_update_tick) > CRSF_TIMEOUT_MS) {
         g_rc_data.connected = false;
-        
-        /* 失控保护超时 */
-        if ((current_tick - g_crsf_raw.last_update_tick) > CRSF_FAILSAFE_TIMEOUT) {
-            g_rc_data.failsafe = true;
-            g_crsf_raw.failsafe = true;
-        }
+        g_rc_data.failsafe = true;
         return;
     }
     
-    /* 如果有新帧，处理数据 */
+    /* 如果有新帧，数据已在中断中处理 */
     if (g_crsf_new_frame) {
         g_crsf_new_frame = false;
         
@@ -157,13 +133,86 @@ void CRSF_Process(void)
 }
 
 /**
- * @brief 解析 RC 通道数据
+ * @brief 解析 CRSF 帧
  */
-bool CRSF_ParseRCChannels(const uint8_t *payload, CRSF_RawData_t *raw)
+bool CRSF_ParseFrame(const uint8_t *buffer, uint16_t len)
 {
-    /* CRSF RC 通道数据格式: 16 通道 × 11 位 = 176 位 = 22 字节
-     * 与 SBUS 格式相同，但值范围不同
-     */
+    if (len < 4) {
+        return false;
+    }
+    
+    /* 查找同步字节 */
+    uint16_t i = 0;
+    while (i < len) {
+        if (buffer[i] == CRSF_SYNC_BYTE || buffer[i] == CRSF_SYNC_BYTE_FC) {
+            /* 检查帧长度 */
+            if (i + 1 >= len) break;
+            uint8_t frame_len = buffer[i + 1];
+            
+            /* 验证帧长度 */
+            if (frame_len < 2 || frame_len > CRSF_MAX_FRAME_SIZE - 2) {
+                i++;
+                continue;
+            }
+            
+            /* 检查是否有完整帧 */
+            if (i + 2 + frame_len > len) break;
+            
+            /* 验证 CRC */
+            uint8_t crc = CRSF_CRC8(&buffer[i + 2], frame_len - 1);
+            if (crc != buffer[i + 1 + frame_len]) {
+                i++;
+                continue;
+            }
+            
+            /* 获取帧类型 */
+            uint8_t frame_type = buffer[i + 2];
+            const uint8_t *payload = &buffer[i + 3];
+            
+            /* 根据帧类型处理 */
+            switch (frame_type) {
+                case CRSF_FRAMETYPE_RC_CHANNELS:
+                    if (CRSF_ParseChannels(payload, &g_crsf_raw)) {
+                        crsf_last_update_tick = HAL_GetTick();
+                        g_crsf_new_frame = true;
+                    }
+                    break;
+                    
+                case CRSF_FRAMETYPE_LINK_STATISTICS:
+                    if (CRSF_ParseLinkStats(payload, &g_crsf_link)) {
+                        crsf_last_link_tick = HAL_GetTick();
+                        /* 更新 RSSI/LQ */
+                        g_rc_data.rssi_dbm = -(int8_t)g_crsf_link.uplink_rssi_1;
+                        g_rc_data.rssi_percent = CRSF_RSSItoPercent(g_rc_data.rssi_dbm);
+                        g_rc_data.link_quality = g_crsf_link.uplink_lq;
+                        g_rc_data.snr = g_crsf_link.uplink_snr;
+                        g_rc_data.rssi_warning = (g_rc_data.link_quality < CRSF_LQ_WARNING);
+                        g_rc_data.rssi_critical = (g_rc_data.link_quality < CRSF_LQ_CRITICAL);
+                    }
+                    break;
+                    
+                default:
+                    /* 忽略其他帧类型 */
+                    break;
+            }
+            
+            /* 移动到下一帧 */
+            i += 2 + frame_len;
+        } else {
+            i++;
+        }
+    }
+    
+    return g_crsf_new_frame;
+}
+
+/**
+ * @brief 解析 RC 通道数据
+ * @note CRSF RC 通道帧格式: 22 字节载荷, 16 通道 x 11 位
+ */
+bool CRSF_ParseChannels(const uint8_t *payload, CRSF_RawData_t *raw)
+{
+    /* 解析 16 通道数据 (11 位/通道，紧密打包) */
     raw->channels[0]  = ((payload[0]       | payload[1]  << 8) & 0x07FF);
     raw->channels[1]  = ((payload[1]  >> 3 | payload[2]  << 5) & 0x07FF);
     raw->channels[2]  = ((payload[2]  >> 6 | payload[3]  << 2 | payload[4] << 10) & 0x07FF);
@@ -181,8 +230,8 @@ bool CRSF_ParseRCChannels(const uint8_t *payload, CRSF_RawData_t *raw)
     raw->channels[14] = ((payload[19] >> 2 | payload[20] << 6) & 0x07FF);
     raw->channels[15] = ((payload[20] >> 5 | payload[21] << 3) & 0x07FF);
     
+    /* CRSF 没有显式的 failsafe 标志，通过超时检测 */
     raw->failsafe = false;
-    raw->last_update_tick = HAL_GetTick();
     
     return true;
 }
@@ -203,84 +252,19 @@ bool CRSF_ParseLinkStats(const uint8_t *payload, CRSF_LinkStats_t *stats)
     stats->downlink_lq = payload[8];
     stats->downlink_snr = (int8_t)payload[9];
     
-    /* 更新全局 RC 数据中的链路质量 */
-    g_rc_data.link_quality = stats->uplink_lq;
-    g_rc_data.rssi = stats->uplink_lq;  /* 使用 LQ 作为 RSSI 百分比 */
-    g_rc_data.rssi_dbm = -(int8_t)stats->uplink_rssi_1;  /* 转换为负值 */
-    
-    /* 设置警告标志 */
-    g_rc_data.rssi_warning = (stats->uplink_lq < CRSF_LQ_WARNING);
-    g_rc_data.rssi_critical = (stats->uplink_lq < CRSF_LQ_CRITICAL);
-    
-    return true;
-}
-
-/**
- * @brief 解析 CRSF 帧
- */
-bool CRSF_ParseFrame(const uint8_t *buffer, uint16_t len)
-{
-    if (len < 4) return false;  /* 最小帧长度: Sync + Len + Type + CRC */
-    
-    uint8_t sync = buffer[0];
-    uint8_t frame_len = buffer[1];
-    uint8_t frame_type = buffer[2];
-    
-    /* 验证同步字节 */
-    if (sync != CRSF_SYNC_BYTE && sync != CRSF_SYNC_BYTE_FC) {
-        return false;
-    }
-    
-    /* 验证帧长度 */
-    if (frame_len < 2 || frame_len > CRSF_MAX_PAYLOAD_SIZE + 2) {
-        return false;
-    }
-    
-    /* 验证缓冲区长度 */
-    if (len < (uint16_t)(frame_len + 2)) {
-        return false;
-    }
-    
-    /* 验证 CRC (从 Type 开始到 CRC 前一个字节) */
-    uint8_t crc_calc = CRSF_CRC8(&buffer[2], frame_len - 1);
-    uint8_t crc_recv = buffer[frame_len + 1];
-    
-    if (crc_calc != crc_recv) {
-        return false;
-    }
-    
-    /* 根据帧类型处理 */
-    const uint8_t *payload = &buffer[3];
-    
-    switch (frame_type) {
-        case CRSF_FRAMETYPE_RC_CHANNELS:
-            if (CRSF_ParseRCChannels(payload, &g_crsf_raw)) {
-                g_crsf_new_frame = true;
-            }
-            break;
-            
-        case CRSF_FRAMETYPE_LINK_STATISTICS:
-            CRSF_ParseLinkStats(payload, &g_crsf_stats);
-            break;
-            
-        default:
-            /* 其他帧类型暂不处理 */
-            break;
-    }
-    
     return true;
 }
 
 /**
  * @brief 将原始值转换为归一化值
  */
-void CRSF_Normalize(const CRSF_RawData_t *raw, RC_Data_t *rc)
+void CRSF_Normalize(const CRSF_RawData_t *raw, CRSF_RCData_t *rc)
 {
-    /* 通道映射 (AETR 顺序):
-     * CH1 = Roll (A)
-     * CH2 = Pitch (E)
-     * CH3 = Throttle (T)
-     * CH4 = Yaw (R)
+    /* 通道映射 (根据遥控器设置调整):
+     * CH1 = Roll
+     * CH2 = Pitch
+     * CH3 = Throttle
+     * CH4 = Yaw
      * CH5 = Aux1 (解锁开关)
      * CH6 = Aux2 (模式开关)
      * CH7 = Aux3
@@ -367,55 +351,6 @@ float CRSF_Map(uint16_t value, float out_min, float out_max)
 }
 
 /**
- * @brief 处理 DMA 缓冲区数据
- */
-static void CRSF_ProcessBuffer(void)
-{
-    /* 获取当前 DMA 位置 */
-    uint16_t dma_pos = CRSF_RX_BUFFER_SIZE - __HAL_DMA_GET_COUNTER(huart3.hdmarx);
-    
-    /* 处理新接收的数据 */
-    while (crsf_rx_tail != dma_pos) {
-        uint8_t byte = crsf_rx_buffer[crsf_rx_tail];
-        
-        /* 查找同步字节 */
-        if (byte == CRSF_SYNC_BYTE || byte == CRSF_SYNC_BYTE_FC) {
-            /* 尝试解析帧 */
-            uint16_t available = (dma_pos >= crsf_rx_tail) ? 
-                                 (dma_pos - crsf_rx_tail) : 
-                                 (CRSF_RX_BUFFER_SIZE - crsf_rx_tail + dma_pos);
-            
-            if (available >= 3) {
-                /* 读取帧长度 */
-                uint16_t len_pos = (crsf_rx_tail + 1) % CRSF_RX_BUFFER_SIZE;
-                uint8_t frame_len = crsf_rx_buffer[len_pos];
-                
-                if (frame_len >= 2 && frame_len <= CRSF_MAX_PAYLOAD_SIZE + 2) {
-                    uint16_t total_len = frame_len + 2;  /* Sync + Len + Payload + CRC */
-                    
-                    if (available >= total_len) {
-                        /* 复制帧到解析缓冲区 */
-                        for (uint16_t i = 0; i < total_len; i++) {
-                            crsf_frame_buffer[i] = crsf_rx_buffer[(crsf_rx_tail + i) % CRSF_RX_BUFFER_SIZE];
-                        }
-                        
-                        /* 解析帧 */
-                        if (CRSF_ParseFrame(crsf_frame_buffer, total_len)) {
-                            /* 成功解析，跳过整个帧 */
-                            crsf_rx_tail = (crsf_rx_tail + total_len) % CRSF_RX_BUFFER_SIZE;
-                            continue;
-                        }
-                    }
-                }
-            }
-        }
-        
-        /* 移动到下一个字节 */
-        crsf_rx_tail = (crsf_rx_tail + 1) % CRSF_RX_BUFFER_SIZE;
-    }
-}
-
-/**
  * @brief UART 空闲中断回调
  */
 void CRSF_UART_IdleCallback(void)
@@ -425,8 +360,19 @@ void CRSF_UART_IdleCallback(void)
         /* 清除空闲标志 */
         __HAL_UART_CLEAR_IDLEFLAG(&huart3);
         
-        /* 处理缓冲区数据 */
-        CRSF_ProcessBuffer();
+        /* 停止 DMA */
+        HAL_UART_DMAStop(&huart3);
+        
+        /* 计算接收到的字节数 */
+        uint32_t rx_len = CRSF_RX_BUFFER_SIZE - __HAL_DMA_GET_COUNTER(huart3.hdmarx);
+        
+        /* 解析帧 */
+        if (rx_len > 0) {
+            CRSF_ParseFrame(crsf_rx_buffer, rx_len);
+        }
+        
+        /* 重新启动 DMA 接收 */
+        HAL_UART_Receive_DMA(&huart3, crsf_rx_buffer, CRSF_RX_BUFFER_SIZE);
     }
 }
 
@@ -435,17 +381,8 @@ void CRSF_UART_IdleCallback(void)
  */
 void CRSF_DMA_RxCpltCallback(void)
 {
-    /* 处理缓冲区数据 */
-    CRSF_ProcessBuffer();
-}
-
-/**
- * @brief DMA 半传输完成回调
- */
-void CRSF_DMA_RxHalfCpltCallback(void)
-{
-    /* 处理缓冲区数据 */
-    CRSF_ProcessBuffer();
+    /* 缓冲区满，解析帧 */
+    CRSF_ParseFrame(crsf_rx_buffer, CRSF_RX_BUFFER_SIZE);
 }
 
 /**
@@ -460,21 +397,34 @@ void CRSF_Reset(void)
     memset(crsf_rx_buffer, 0, sizeof(crsf_rx_buffer));
     memset(crsf_frame_buffer, 0, sizeof(crsf_frame_buffer));
     
-    /* 重置指针 */
-    crsf_rx_head = 0;
-    crsf_rx_tail = 0;
-    
     /* 重置状态 */
     g_crsf_new_frame = false;
     g_rc_data.connected = false;
     g_rc_data.failsafe = true;
-    g_rc_data.rssi = 0;
+    g_rc_data.rssi_dbm = -120;
+    g_rc_data.rssi_percent = 0;
     g_rc_data.link_quality = 0;
     g_rc_data.rssi_warning = true;
     g_rc_data.rssi_critical = true;
     
     /* 重新启动 DMA */
     HAL_UART_Receive_DMA(&huart3, crsf_rx_buffer, CRSF_RX_BUFFER_SIZE);
+}
+
+/**
+ * @brief 获取 RSSI 值 (dBm)
+ */
+int8_t CRSF_GetRSSI_dBm(void)
+{
+    return g_rc_data.rssi_dbm;
+}
+
+/**
+ * @brief 获取 RSSI 百分比
+ */
+uint8_t CRSF_GetRSSI_Percent(void)
+{
+    return g_rc_data.rssi_percent;
 }
 
 /**
@@ -486,11 +436,11 @@ uint8_t CRSF_GetLinkQuality(void)
 }
 
 /**
- * @brief 获取 RSSI (dBm)
+ * @brief 获取信噪比
  */
-int8_t CRSF_GetRSSI_dBm(void)
+int8_t CRSF_GetSNR(void)
 {
-    return g_rc_data.rssi_dbm;
+    return g_rc_data.snr;
 }
 
 /**
@@ -510,148 +460,36 @@ bool CRSF_IsRSSICritical(void)
 }
 
 /**
- * @brief 发送遥测数据 (电池信息)
+ * @brief 计算 CRSF CRC8 (DVB-S2)
  */
-CRSF_Status_t CRSF_SendTelemetryBattery(uint16_t voltage, uint16_t current, 
-                                         uint32_t capacity, uint8_t remaining)
+uint8_t CRSF_CRC8(const uint8_t *data, uint8_t len)
 {
-    uint8_t payload[8];
-    
-    /* 电压: 0.1V 单位, 大端序 */
-    payload[0] = (voltage >> 8) & 0xFF;
-    payload[1] = voltage & 0xFF;
-    
-    /* 电流: 0.1A 单位, 大端序 */
-    payload[2] = (current >> 8) & 0xFF;
-    payload[3] = current & 0xFF;
-    
-    /* 已用容量: mAh, 大端序 (24位) */
-    payload[4] = (capacity >> 16) & 0xFF;
-    payload[5] = (capacity >> 8) & 0xFF;
-    payload[6] = capacity & 0xFF;
-    
-    /* 剩余百分比 */
-    payload[7] = remaining;
-    
-    /* 构建帧 */
-    crsf_tx_buffer[0] = CRSF_SYNC_BYTE_FC;
-    crsf_tx_buffer[1] = 10;  /* Len = Type + Payload + CRC */
-    crsf_tx_buffer[2] = CRSF_FRAMETYPE_BATTERY_SENSOR;
-    memcpy(&crsf_tx_buffer[3], payload, 8);
-    crsf_tx_buffer[11] = CRSF_CRC8(&crsf_tx_buffer[2], 9);
-    
-    /* 发送 */
-    if (HAL_UART_Transmit_DMA(&huart3, crsf_tx_buffer, 12) != HAL_OK) {
-        return CRSF_ERROR;
+    uint8_t crc = 0;
+    for (uint8_t i = 0; i < len; i++) {
+        crc = crsf_crc8_table[crc ^ data[i]];
     }
+    return crc;
+}
+
+/* Private functions ---------------------------------------------------------*/
+
+/**
+ * @brief 将 RSSI (dBm) 转换为百分比
+ * @note ELRS 典型范围: -120 dBm (0%) 到 -50 dBm (100%)
+ */
+static int8_t CRSF_RSSItoPercent(int8_t rssi_dbm)
+{
+    if (rssi_dbm >= -50) return 100;
+    if (rssi_dbm <= -120) return 0;
     
-    return CRSF_OK;
+    /* 线性映射 -120 ~ -50 dBm 到 0 ~ 100% */
+    return (int8_t)(((rssi_dbm + 120) * 100) / 70);
 }
 
 /**
- * @brief 发送遥测数据 (GPS 信息)
+ * @brief 处理接收缓冲区
  */
-CRSF_Status_t CRSF_SendTelemetryGPS(int32_t lat, int32_t lon, uint16_t speed,
-                                     uint16_t heading, uint16_t altitude, uint8_t satellites)
+static void CRSF_ProcessBuffer(const uint8_t *buffer, uint16_t len)
 {
-    uint8_t payload[15];
-    
-    /* 纬度: 度 × 10^7, 大端序 */
-    payload[0] = (lat >> 24) & 0xFF;
-    payload[1] = (lat >> 16) & 0xFF;
-    payload[2] = (lat >> 8) & 0xFF;
-    payload[3] = lat & 0xFF;
-    
-    /* 经度: 度 × 10^7, 大端序 */
-    payload[4] = (lon >> 24) & 0xFF;
-    payload[5] = (lon >> 16) & 0xFF;
-    payload[6] = (lon >> 8) & 0xFF;
-    payload[7] = lon & 0xFF;
-    
-    /* 地速: cm/s, 大端序 */
-    payload[8] = (speed >> 8) & 0xFF;
-    payload[9] = speed & 0xFF;
-    
-    /* 航向: 度 × 100, 大端序 */
-    payload[10] = (heading >> 8) & 0xFF;
-    payload[11] = heading & 0xFF;
-    
-    /* 海拔: m + 1000m 偏移, 大端序 */
-    payload[12] = (altitude >> 8) & 0xFF;
-    payload[13] = altitude & 0xFF;
-    
-    /* 卫星数 */
-    payload[14] = satellites;
-    
-    /* 构建帧 */
-    crsf_tx_buffer[0] = CRSF_SYNC_BYTE_FC;
-    crsf_tx_buffer[1] = 17;  /* Len = Type + Payload + CRC */
-    crsf_tx_buffer[2] = CRSF_FRAMETYPE_GPS;
-    memcpy(&crsf_tx_buffer[3], payload, 15);
-    crsf_tx_buffer[18] = CRSF_CRC8(&crsf_tx_buffer[2], 16);
-    
-    /* 发送 */
-    if (HAL_UART_Transmit_DMA(&huart3, crsf_tx_buffer, 19) != HAL_OK) {
-        return CRSF_ERROR;
-    }
-    
-    return CRSF_OK;
-}
-
-/**
- * @brief 发送遥测数据 (姿态信息)
- */
-CRSF_Status_t CRSF_SendTelemetryAttitude(int16_t pitch, int16_t roll, int16_t yaw)
-{
-    uint8_t payload[6];
-    
-    /* 俯仰角: 弧度 × 10000, 大端序 */
-    payload[0] = (pitch >> 8) & 0xFF;
-    payload[1] = pitch & 0xFF;
-    
-    /* 横滚角: 弧度 × 10000, 大端序 */
-    payload[2] = (roll >> 8) & 0xFF;
-    payload[3] = roll & 0xFF;
-    
-    /* 偏航角: 弧度 × 10000, 大端序 */
-    payload[4] = (yaw >> 8) & 0xFF;
-    payload[5] = yaw & 0xFF;
-    
-    /* 构建帧 */
-    crsf_tx_buffer[0] = CRSF_SYNC_BYTE_FC;
-    crsf_tx_buffer[1] = 8;  /* Len = Type + Payload + CRC */
-    crsf_tx_buffer[2] = CRSF_FRAMETYPE_ATTITUDE;
-    memcpy(&crsf_tx_buffer[3], payload, 6);
-    crsf_tx_buffer[9] = CRSF_CRC8(&crsf_tx_buffer[2], 7);
-    
-    /* 发送 */
-    if (HAL_UART_Transmit_DMA(&huart3, crsf_tx_buffer, 10) != HAL_OK) {
-        return CRSF_ERROR;
-    }
-    
-    return CRSF_OK;
-}
-
-/**
- * @brief 发送遥测数据 (飞行模式)
- */
-CRSF_Status_t CRSF_SendTelemetryFlightMode(const char *mode)
-{
-    uint8_t len = strlen(mode);
-    if (len > 14) len = 14;  /* 最多 14 字符 */
-    
-    /* 构建帧 */
-    crsf_tx_buffer[0] = CRSF_SYNC_BYTE_FC;
-    crsf_tx_buffer[1] = len + 3;  /* Len = Type + Payload + CRC */
-    crsf_tx_buffer[2] = CRSF_FRAMETYPE_FLIGHT_MODE;
-    memcpy(&crsf_tx_buffer[3], mode, len);
-    crsf_tx_buffer[3 + len] = 0;  /* 字符串结束符 */
-    crsf_tx_buffer[4 + len] = CRSF_CRC8(&crsf_tx_buffer[2], len + 2);
-    
-    /* 发送 */
-    if (HAL_UART_Transmit_DMA(&huart3, crsf_tx_buffer, 5 + len) != HAL_OK) {
-        return CRSF_ERROR;
-    }
-    
-    return CRSF_OK;
+    CRSF_ParseFrame(buffer, len);
 }

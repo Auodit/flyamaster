@@ -46,11 +46,11 @@ void GPS_Init(void)
     g_gps_data.home_set = false;
     g_gps_new_data = false;
     
-    /* 启用 UART2 空闲中断 */
-    __HAL_UART_ENABLE_IT(&huart2, UART_IT_IDLE);
+    /* 启用 UART5 空闲中断 */
+    __HAL_UART_ENABLE_IT(&huart5, UART_IT_IDLE);
     
     /* 启动 DMA 循环接收 */
-    HAL_UART_Receive_DMA(&huart2, gps_rx_buffer, GPS_RX_BUFFER_SIZE);
+    HAL_UART_Receive_DMA(&huart5, gps_rx_buffer, GPS_RX_BUFFER_SIZE);
 }
 
 /**
@@ -347,14 +347,14 @@ uint8_t GPS_GetSatellites(void)
  */
 void GPS_UART_IdleCallback(void)
 {
-    if (__HAL_UART_GET_FLAG(&huart2, UART_FLAG_IDLE)) {
-        __HAL_UART_CLEAR_IDLEFLAG(&huart2);
+    if (__HAL_UART_GET_FLAG(&huart5, UART_FLAG_IDLE)) {
+        __HAL_UART_CLEAR_IDLEFLAG(&huart5);
         
         /* 停止 DMA */
-        HAL_UART_DMAStop(&huart2);
+        HAL_UART_DMAStop(&huart5);
         
         /* 计算接收长度 */
-        uint32_t rx_len = GPS_RX_BUFFER_SIZE - __HAL_DMA_GET_COUNTER(huart2.hdmarx);
+        uint32_t rx_len = GPS_RX_BUFFER_SIZE - __HAL_DMA_GET_COUNTER(huart5.hdmarx);
         
         /* 解析接收到的数据 */
         for (uint32_t i = 0; i < rx_len; i++) {
@@ -378,7 +378,7 @@ void GPS_UART_IdleCallback(void)
         }
         
         /* 重新启动 DMA */
-        HAL_UART_Receive_DMA(&huart2, gps_rx_buffer, GPS_RX_BUFFER_SIZE);
+        HAL_UART_Receive_DMA(&huart5, gps_rx_buffer, GPS_RX_BUFFER_SIZE);
     }
 }
 

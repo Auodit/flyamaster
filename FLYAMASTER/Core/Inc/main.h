@@ -61,14 +61,21 @@ void Error_Handler(void);
 #define Power_Key_GPIO_Port GPIOA
 #define FLASH_CS_Pin GPIO_PIN_4
 #define FLASH_CS_GPIO_Port GPIOA
-#define OSD_CS_Pin GPIO_PIN_12
-#define OSD_CS_GPIO_Port GPIOB
 #define Optical_Flow_Pin GPIO_PIN_12
 #define Optical_Flow_GPIO_Port GPIOC
 #define Optical_FlowD2_Pin GPIO_PIN_2
 #define Optical_FlowD2_GPIO_Port GPIOD
 
 /* USER CODE BEGIN Private defines */
+
+/* SPI 片选引脚定义 (根据硬件设计文档 08_hardware_design.md v2.5.7) */
+/* 注意: CubeMX 生成的 FLASH_CS 在 PA4，但设计文档要求:
+ *   - PA4 = OSD_CS (AT7456E OSD 芯片)
+ *   - PC4 = FLASH_CS (W25Q128 Flash)
+ * 如果 PCB 按设计文档布线，需要在 CubeMX 中修正引脚标签
+ */
+#define OSD_CS_Pin GPIO_PIN_4
+#define OSD_CS_GPIO_Port GPIOC
 
 /* LED 引脚定义 (根据硬件设计文档 08_hardware_design.md) */
 #define LED_BLUE_Pin GPIO_PIN_3

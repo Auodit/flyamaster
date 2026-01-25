@@ -6,6 +6,24 @@
 
 ---
 
+## [HW v2.5.7] - 2026-01-25 (SPI CS Pin Swap & PCB Layout)
+
+### Changed (变更)
+- **SPI 片选引脚对调**:
+  - PA4: FLASH_CS → **OSD_CS**
+  - PC4: OSD_CS → **FLASH_CS**
+- **PCB 布局**: 初版 PCB 布局完成，待优化 USB-C 插口位置
+
+### Technical Details
+- **变更原因**: 优化 PCB 走线，使 Flash 和 OSD 片选更靠近各自芯片
+- **代码影响**: 需要在 CubeMX 中重新配置引脚标签
+
+### Known Issues
+- **CubeMX 配置不一致**: 当前 CubeMX 生成的代码中 FLASH_CS 仍在 PA4，需要用户手动修正
+- **USB-C 插口**: PCB 空间不足，需要优化布局
+
+---
+
 ## [HW v2.4.0] - 2026-01-23 (USB Detection Enhancement)
 
 ### Added (新增)

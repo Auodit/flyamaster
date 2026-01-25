@@ -6,9 +6,9 @@
  * 
  * @details
  * SmartAudio 是 TBS 开发的图传控制协议，用于远程调节 VTX 参数。
- * 
+ *
  * 硬件连接:
- * - UART4_TX (PC10) - 半双工模式
+ * - USART1_TX (PB6) / USART1_RX (PB7) - 重映射
  * - 波特率: 4800 bps
  * - 协议: SmartAudio V2.1
  */

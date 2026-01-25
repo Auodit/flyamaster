@@ -9,7 +9,7 @@
  * 
  * 硬件连接:
  * - SPI1 (PA5/PA6/PA7) - 与 OSD 共享总线
- * - CS: PB0 (FLASH_CS)
+ * - CS: PC4 (FLASH_CS)
  * - 容量: 16MB (256 块 x 16 扇区 x 4KB)
  */
 

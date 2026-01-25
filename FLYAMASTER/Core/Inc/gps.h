@@ -11,9 +11,10 @@
  * - GNVTG: 地面速度
  * 
  * 硬件连接:
- * - USART2 (PA2/PA3)
+ * - UART5 (PC12/PD2)
  * - 波特率: 115200 (可配置)
  * - DMA 循环接收
+ * - DMA: DMA1_Stream0 (RX)
  */
 
 #ifndef __GPS_H

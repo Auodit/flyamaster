@@ -235,13 +235,10 @@ void StartDefaultTask(void *argument)
   /* 自动检测电池节数 */
   Battery_AutoDetectCells();
   
-  /* 设置初始 LED 状态 */
+  /* 设置初始 LED 状态 (4 颗 LED: SYS, MODE, GPS, VTX) */
   LED_SetSysState(SYS_STATE_STANDBY);
-  LED_SetErrState(ERR_STATE_NONE);
-  LED_SetGpsState(GPS_STATE_NONE);
-  LED_SetRxState(RX_STATE_FAILSAFE);
   LED_SetModeState(MODE_STATE_ANGLE);
-  LED_SetLogState(LOG_STATE_IDLE);
+  LED_SetGpsState(GPS_STATE_NONE);
   LED_SetVtxState(VTX_STATE_NORMAL);
   
   /* Infinite loop */
@@ -480,9 +477,9 @@ void StartCommTask(void *argument)
         break;
     }
     
-    /* RSSI 信号强度 */
-    AT7456E_WriteString(16, 3, "RSSI:");
-    AT7456E_WriteInt(21, 3, g_rc_data.rssi, 0);
+    /* RSSI 信号强度 (Link Quality) */
+    AT7456E_WriteString(16, 3, "LQ:");
+    AT7456E_WriteInt(19, 3, g_rc_data.link_quality, 0);
     
     /* ===== 第四行：警告信息 ===== */
     if (g_battery.status == BATTERY_CRITICAL) {
@@ -535,10 +532,11 @@ void StartTask06(void *argument)
 
 /**
  * @brief 更新所有 LED 状态 (根据系统状态自动设置)
+ * @note 4 颗 LED: LED_SYS (PB12), LED_MODE (PB13), LED_GPS (PB14), LED_VTX (PB15)
  */
 static void LED_UpdateAll(void)
 {
-  /* ===== LED_SYS: 系统状态 ===== */
+  /* ===== LED_SYS (PB12): 系统状态 ===== */
   if (FC_IsArmed()) {
     if (g_fc_data.state == FC_STATE_FLYING) {
       LED_SetSysState(SYS_STATE_FLYING);
@@ -549,38 +547,7 @@ static void LED_UpdateAll(void)
     LED_SetSysState(SYS_STATE_STANDBY);
   }
   
-  /* ===== LED_ERR: 错误/警告状态 ===== */
-  if (g_fc_data.failsafe_active) {
-    LED_SetErrState(ERR_STATE_CRITICAL);
-  } else if (g_battery.status == BATTERY_CRITICAL) {
-    LED_SetErrState(ERR_STATE_CRITICAL);
-  } else if (g_battery.status == BATTERY_OVERCURRENT) {
-    LED_SetErrState(ERR_STATE_SENSOR_FAIL);
-  } else if (g_battery.status == BATTERY_WARNING) {
-    LED_SetErrState(ERR_STATE_LOW_BATTERY);
-  } else {
-    LED_SetErrState(ERR_STATE_NONE);
-  }
-  
-  /* ===== LED_GPS: GPS 状态 ===== */
-  if (g_gps_data.fix_type >= 3 && g_gps_data.satellites >= 6) {
-    LED_SetGpsState(GPS_STATE_LOCKED);
-  } else if (g_gps_data.satellites > 0) {
-    LED_SetGpsState(GPS_STATE_SEARCHING);
-  } else {
-    LED_SetGpsState(GPS_STATE_NONE);
-  }
-  
-  /* ===== LED_RX: 遥控接收状态 ===== */
-  if (CRSF_IsFailsafe()) {
-    LED_SetRxState(RX_STATE_FAILSAFE);
-  } else if (g_rc_data.rssi < 30) {
-    LED_SetRxState(RX_STATE_WEAK);
-  } else {
-    LED_SetRxState(RX_STATE_OK);
-  }
-  
-  /* ===== LED_MODE: 飞行模式 ===== */
+  /* ===== LED_MODE (PB13): 飞行模式 ===== */
   switch (FC_GetMode()) {
     case FC_MODE_ACRO:
       LED_SetModeState(MODE_STATE_ACRO);
@@ -593,13 +560,25 @@ static void LED_UpdateAll(void)
       break;
   }
   
-  /* ===== LED_LOG: 黑匣子状态 ===== */
-  /* TODO: 根据 W25QXX 写入状态更新 */
-  /* 暂时保持 IDLE */
+  /* ===== LED_GPS (PB14): GPS 状态 ===== */
+  if (g_gps_data.fix_quality >= GPS_FIX_GPS && g_gps_data.satellites >= 6) {
+    LED_SetGpsState(GPS_STATE_LOCKED);
+  } else if (g_gps_data.satellites > 0) {
+    LED_SetGpsState(GPS_STATE_SEARCHING);
+  } else {
+    LED_SetGpsState(GPS_STATE_NONE);
+  }
   
-  /* ===== LED_VTX: 图传状态 ===== */
-  /* TODO: 根据 SmartAudio PIT 模式更新 */
-  /* 暂时保持 NORMAL */
+  /* ===== LED_VTX (PB15): 图传/警告状态 ===== */
+  /* 优先显示警告状态 */
+  if (g_fc_data.failsafe_active || g_battery.status == BATTERY_CRITICAL) {
+    LED_SetVtxState(VTX_STATE_WARNING);
+  } else if (g_battery.status == BATTERY_WARNING) {
+    LED_SetVtxState(VTX_STATE_WARNING);
+  } else {
+    /* TODO: 根据 SmartAudio PIT 模式更新 */
+    LED_SetVtxState(VTX_STATE_NORMAL);
+  }
 }
 
 /**

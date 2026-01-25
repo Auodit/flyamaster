@@ -1,8 +1,14 @@
 /**
  * @file led_indicator.c
- * @brief 7 颗 LED 状态指示灯驱动实现
- * @version 1.0.0
- * @date 2026-01-23
+ * @brief 4 颗 LED 状态指示灯驱动实现
+ * @version 2.0.0
+ * @date 2026-01-24
+ * 
+ * LED 配置:
+ * - PB12: LED_SYS  (蓝色) - 系统状态
+ * - PB13: LED_MODE (白色) - 飞行模式
+ * - PB14: LED_GPS  (绿色) - GPS 状态
+ * - PB15: LED_VTX  (青色) - 图传/警告
  */
 
 #include "led_indicator.h"
@@ -22,15 +28,12 @@ typedef struct {
 
 /* ==================== 私有变量 ==================== */
 
-// LED GPIO 映射表
+// LED GPIO 映射表 (4 颗 LED: PB12-PB15)
 static const LED_GPIO_t led_gpio[LED_ID_COUNT] = {
-    [LED_ID_SYS]  = { LED_SYS_GPIO_Port,  LED_SYS_Pin  },
-    [LED_ID_ERR]  = { LED_ERR_GPIO_Port,  LED_ERR_Pin  },
-    [LED_ID_GPS]  = { LED_GPS_GPIO_Port,  LED_GPS_Pin  },
-    [LED_ID_RX]   = { LED_RX_GPIO_Port,   LED_RX_Pin   },
-    [LED_ID_MODE] = { LED_MODE_GPIO_Port, LED_MODE_Pin },
-    [LED_ID_LOG]  = { LED_LOG_GPIO_Port,  LED_LOG_Pin  },
-    [LED_ID_VTX]  = { LED_VTX_GPIO_Port,  LED_VTX_Pin  },
+    [LED_ID_SYS]  = { LED_SYS_GPIO_Port,  LED_SYS_Pin  },   // PB12
+    [LED_ID_MODE] = { LED_MODE_GPIO_Port, LED_MODE_Pin },   // PB13
+    [LED_ID_GPS]  = { LED_GPS_GPIO_Port,  LED_GPS_Pin  },   // PB14
+    [LED_ID_VTX]  = { LED_VTX_GPIO_Port,  LED_VTX_Pin  },   // PB15
 };
 
 // LED 控制状态
@@ -226,20 +229,17 @@ void LED_SetSysState(SysState_t state)
     }
 }
 
-void LED_SetErrState(ErrState_t state)
+void LED_SetModeState(ModeState_t state)
 {
     switch (state) {
-        case ERR_STATE_NONE:
-            LED_SetState(LED_ID_ERR, LED_STATE_OFF);
+        case MODE_STATE_ANGLE:
+            LED_SetState(LED_ID_MODE, LED_STATE_OFF);
             break;
-        case ERR_STATE_LOW_BATTERY:
-            LED_SetState(LED_ID_ERR, LED_STATE_BLINK_SLOW);
+        case MODE_STATE_ACRO:
+            LED_SetState(LED_ID_MODE, LED_STATE_ON);
             break;
-        case ERR_STATE_SENSOR_FAIL:
-            LED_SetState(LED_ID_ERR, LED_STATE_BLINK_FAST);
-            break;
-        case ERR_STATE_CRITICAL:
-            LED_SetState(LED_ID_ERR, LED_STATE_ON);
+        case MODE_STATE_RTH:
+            LED_SetState(LED_ID_MODE, LED_STATE_BLINK_SLOW);
             break;
     }
 }
@@ -259,48 +259,6 @@ void LED_SetGpsState(GpsState_t state)
     }
 }
 
-void LED_SetRxState(RxState_t state)
-{
-    switch (state) {
-        case RX_STATE_FAILSAFE:
-            LED_SetState(LED_ID_RX, LED_STATE_OFF);
-            break;
-        case RX_STATE_WEAK:
-            LED_SetState(LED_ID_RX, LED_STATE_BLINK_FAST);
-            break;
-        case RX_STATE_OK:
-            LED_SetState(LED_ID_RX, LED_STATE_ON);
-            break;
-    }
-}
-
-void LED_SetModeState(ModeState_t state)
-{
-    switch (state) {
-        case MODE_STATE_ANGLE:
-            LED_SetState(LED_ID_MODE, LED_STATE_OFF);
-            break;
-        case MODE_STATE_ACRO:
-            LED_SetState(LED_ID_MODE, LED_STATE_ON);
-            break;
-        case MODE_STATE_RTH:
-            LED_SetState(LED_ID_MODE, LED_STATE_BLINK_SLOW);
-            break;
-    }
-}
-
-void LED_SetLogState(LogState_t state)
-{
-    switch (state) {
-        case LOG_STATE_IDLE:
-            LED_SetState(LED_ID_LOG, LED_STATE_OFF);
-            break;
-        case LOG_STATE_RECORDING:
-            LED_SetState(LED_ID_LOG, LED_STATE_BLINK_FAST);
-            break;
-    }
-}
-
 void LED_SetVtxState(VtxState_t state)
 {
     switch (state) {
@@ -309,6 +267,9 @@ void LED_SetVtxState(VtxState_t state)
             break;
         case VTX_STATE_PIT:
             LED_SetState(LED_ID_VTX, LED_STATE_ON);
+            break;
+        case VTX_STATE_WARNING:
+            LED_SetState(LED_ID_VTX, LED_STATE_BLINK_FAST);
             break;
     }
 }

@@ -139,7 +139,7 @@ static void SA_SendCommand(uint8_t cmd, const uint8_t *data, uint8_t len)
     sa_tx_buffer[idx++] = SA_CalculateCRC(&sa_tx_buffer[3], 2 + len);
     
     /* 发送数据 */
-    HAL_UART_Transmit(&huart4, sa_tx_buffer, idx, 100);
+    HAL_UART_Transmit(&huart1, sa_tx_buffer, idx, 100);
     
     /* 清空接收缓冲区 */
     g_smartaudio_data.rx_index = 0;

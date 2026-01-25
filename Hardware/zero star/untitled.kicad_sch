@@ -1117,23 +1117,25 @@
 			(exclude_from_sim no)
 			(in_bom yes)
 			(on_board yes)
-			(property "Reference" "U"
-				(at -11.43 13.97 0)
+			(property "Reference" "U6"
+				(at 2.1433 -16.51 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
+					(justify left)
 				)
 			)
 			(property "Value" "MPU-6050"
-				(at 7.62 -15.24 0)
+				(at 2.1433 -19.05 0)
 				(effects
 					(font
 						(size 1.27 1.27)
 					)
+					(justify left)
 				)
 			)
-			(property "Footprint" "Sensor_Motion:InvenSense_QFN-24_4x4mm_P0.5mm"
+			(property "Footprint" "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm_ThermalVias"
 				(at 0 -20.32 0)
 				(effects
 					(font
@@ -1152,6 +1154,24 @@
 				)
 			)
 			(property "Description" "InvenSense 6-Axis Motion Sensor, Gyroscope, Accelerometer, I2C"
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "KLC_S3.3" ""
+				(at 0 0 0)
+				(effects
+					(font
+						(size 1.27 1.27)
+					)
+					(hide yes)
+				)
+			)
+			(property "KLC_S4.1" ""
 				(at 0 0 0)
 				(effects
 					(font
@@ -1405,7 +1425,7 @@
 							)
 						)
 					)
-					(number "18"
+					(number "25"
 						(effects
 							(font
 								(size 1.27 1.27)
@@ -4521,6 +4541,16 @@
 	)
 	(wire
 		(pts
+			(xy 35.56 157.48) (xy 35.56 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "2f3afbfe-b2b8-45a8-8e9d-658b53f1be31")
+	)
+	(wire
+		(pts
 			(xy 259.08 106.68) (xy 270.51 106.68)
 		)
 		(stroke
@@ -4651,16 +4681,6 @@
 	)
 	(wire
 		(pts
-			(xy 64.77 21.59) (xy 64.77 25.4)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "3d8388f3-01b1-4b96-811b-d9cb6338ca42")
-	)
-	(wire
-		(pts
 			(xy 102.87 106.68) (xy 102.87 109.22)
 		)
 		(stroke
@@ -4678,16 +4698,6 @@
 			(type default)
 		)
 		(uuid "3e041500-51be-4a4f-83d3-eb65444a4594")
-	)
-	(wire
-		(pts
-			(xy 80.01 38.1) (xy 80.01 31.75)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4046ab00-46f6-4b7c-a9aa-c177eedb8bec")
 	)
 	(wire
 		(pts
@@ -4781,26 +4791,6 @@
 	)
 	(wire
 		(pts
-			(xy 69.85 53.34) (xy 69.85 48.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4a0792b4-a416-43a1-9d35-dd90e48620ef")
-	)
-	(wire
-		(pts
-			(xy 64.77 55.88) (xy 64.77 49.53)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "4a4885c3-7986-41e7-a314-12d226363980")
-	)
-	(wire
-		(pts
 			(xy 259.08 134.62) (xy 267.97 134.62)
 		)
 		(stroke
@@ -4878,16 +4868,6 @@
 			(type default)
 		)
 		(uuid "50c8dc12-5f83-4a3b-a78d-31bf2e39710c")
-	)
-	(wire
-		(pts
-			(xy 59.69 21.59) (xy 59.69 25.4)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "5225a98d-cf6c-41ec-8082-a4b6f491e180")
 	)
 	(wire
 		(pts
@@ -5021,16 +5001,6 @@
 	)
 	(wire
 		(pts
-			(xy 88.9 55.88) (xy 88.9 49.53)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "601849ee-9615-467b-8c6a-f46f2d1f60ed")
-	)
-	(wire
-		(pts
 			(xy 223.52 46.99) (xy 227.33 46.99)
 		)
 		(stroke
@@ -5098,16 +5068,6 @@
 			(type default)
 		)
 		(uuid "67987350-017b-4dbc-894b-dd80e71dff4e")
-	)
-	(wire
-		(pts
-			(xy 96.52 55.88) (xy 96.52 49.53)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "69b73456-02a0-417a-97db-2a91c3330b6c")
 	)
 	(polyline
 		(pts
@@ -5281,6 +5241,16 @@
 	)
 	(wire
 		(pts
+			(xy 35.56 161.29) (xy 40.64 161.29)
+		)
+		(stroke
+			(width 0)
+			(type default)
+		)
+		(uuid "7899ccf5-d8ce-4b33-9297-6d7b31b9b7ad")
+	)
+	(wire
+		(pts
 			(xy 175.26 109.22) (xy 175.26 114.3)
 		)
 		(stroke
@@ -5401,16 +5371,6 @@
 	)
 	(wire
 		(pts
-			(xy 80.01 54.61) (xy 80.01 48.26)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "85d33cb5-fe12-4b79-ac8e-8c67bb7ceddb")
-	)
-	(wire
-		(pts
 			(xy 212.09 44.45) (xy 212.09 39.37)
 		)
 		(stroke
@@ -5481,16 +5441,6 @@
 	)
 	(wire
 		(pts
-			(xy 34.29 161.29) (xy 40.64 161.29)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "94582b23-8877-4a38-9dd3-76626e2c9b60")
-	)
-	(wire
-		(pts
 			(xy 233.68 95.25) (xy 238.76 95.25)
 		)
 		(stroke
@@ -5508,16 +5458,6 @@
 			(type default)
 		)
 		(uuid "957a9460-22aa-4f7d-88fd-aad7fbc813ac")
-	)
-	(wire
-		(pts
-			(xy 59.69 55.88) (xy 59.69 49.53)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "95fe02ee-c7ba-4bed-b681-68f3d938c224")
 	)
 	(wire
 		(pts
@@ -5638,16 +5578,6 @@
 			(type default)
 		)
 		(uuid "a8a7929c-9652-4569-ae99-31e1e281d11b")
-	)
-	(wire
-		(pts
-			(xy 80.01 20.32) (xy 80.01 24.13)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "a9b895e8-699b-4a08-b8da-0007a2956657")
 	)
 	(wire
 		(pts
@@ -5798,16 +5728,6 @@
 			(type default)
 		)
 		(uuid "bae1a5b0-8494-4dca-bf1a-a23a990a83d5")
-	)
-	(wire
-		(pts
-			(xy 64.77 39.37) (xy 64.77 33.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "bb6c0886-64cc-4d22-9f3e-0872a7147ac0")
 	)
 	(wire
 		(pts
@@ -6051,16 +5971,6 @@
 	)
 	(wire
 		(pts
-			(xy 104.14 55.88) (xy 104.14 49.53)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "df70b602-bc14-49ba-9204-6182c3057263")
-	)
-	(wire
-		(pts
 			(xy 214.63 119.38) (xy 214.63 121.92)
 		)
 		(stroke
@@ -6209,16 +6119,6 @@
 		)
 		(uuid "f1a13314-4ce5-4f81-8e3c-9fd66103c9f2")
 	)
-	(wire
-		(pts
-			(xy 59.69 39.37) (xy 59.69 33.02)
-		)
-		(stroke
-			(width 0)
-			(type default)
-		)
-		(uuid "f1d34e22-1763-4211-a58c-b0653fbcaa5a")
-	)
 	(polyline
 		(pts
 			(xy 76.2 144.145) (xy 189.865 144.145)
@@ -6319,19 +6219,9 @@
 		)
 		(uuid "ff9dd35c-f065-449a-b4a2-7588f83c5f24")
 	)
-	(label "VBAT"
-		(at 161.29 20.32 0)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify left bottom)
-		)
-		(uuid "4fa3d533-0532-41a5-83f8-9753f55a8993")
-	)
 	(global_label "LED_SYS"
 		(shape input)
-		(at 69.85 53.34 270)
+		(at 104.14 49.53 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6341,7 +6231,7 @@
 		)
 		(uuid "02b61538-d59b-4780-b7ad-cc3ba1208c3c")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 69.85 64.2475 90)
+			(at 104.14 60.4375 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6419,7 +6309,7 @@
 	)
 	(global_label "FLASH_CS"
 		(shape input)
-		(at 34.29 161.29 180)
+		(at 35.56 157.48 180)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6429,7 +6319,7 @@
 		)
 		(uuid "2b47fb7b-8df6-4187-90bf-b34e98457a01")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 22.1124 161.29 0)
+			(at 23.3824 157.48 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6505,9 +6395,9 @@
 			)
 		)
 	)
-	(global_label "LED_LOG"
+	(global_label "LED_GPS"
 		(shape input)
-		(at 96.52 55.88 270)
+		(at 69.85 48.26 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6517,7 +6407,7 @@
 		)
 		(uuid "380ae8e4-1c96-487a-8982-7d2339d57410")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 96.52 66.9085 90)
+			(at 69.85 59.4094 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6573,7 +6463,7 @@
 	)
 	(global_label "LED_MODE"
 		(shape input)
-		(at 88.9 55.88 270)
+		(at 96.52 49.53 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6583,12 +6473,34 @@
 		)
 		(uuid "49b8ceef-20b2-45da-bce8-76c1eb5bf27f")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 88.9 68.4808 90)
+			(at 96.52 62.1308 90)
 			(effects
 				(font
 					(size 1.27 1.27)
 				)
 				(justify right)
+				(hide yes)
+			)
+		)
+	)
+	(global_label "VBAT"
+		(shape input)
+		(at 161.29 20.32 0)
+		(fields_autoplaced yes)
+		(effects
+			(font
+				(size 1.27 1.27)
+			)
+			(justify left)
+		)
+		(uuid "50bdc044-1716-434a-93cf-fafe1a10ed1c")
+		(property "Intersheetrefs" "${INTERSHEET_REFS}"
+			(at 168.69 20.32 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(justify left)
 				(hide yes)
 			)
 		)
@@ -6637,31 +6549,9 @@
 			)
 		)
 	)
-	(global_label "LED_GPS"
-		(shape input)
-		(at 59.69 55.88 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "5a4fa779-19f5-4d57-a39e-1c8b07d89f23")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 59.69 67.0294 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "LED_VTX"
 		(shape input)
-		(at 104.14 55.88 270)
+		(at 88.9 49.53 270)
 		(fields_autoplaced yes)
 		(effects
 			(font
@@ -6671,7 +6561,7 @@
 		)
 		(uuid "5ff4a8e2-8f09-4a23-be96-2e58b35aecb3")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 104.14 66.5456 90)
+			(at 88.9 60.1956 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -6769,28 +6659,6 @@
 			)
 		)
 	)
-	(global_label "LED_ERR"
-		(shape input)
-		(at 80.01 54.61 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "774b7f25-8fff-4c42-ac45-15cbfd4ad0f3")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 80.01 65.6989 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
 	(global_label "I2C1_SCL"
 		(shape input)
 		(at 259.08 46.99 0)
@@ -6870,28 +6738,6 @@
 		(uuid "ae834403-4e52-4121-be67-4a85f3dc65f0")
 		(property "Intersheetrefs" "${INTERSHEET_REFS}"
 			(at 202.8153 106.68 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify right)
-				(hide yes)
-			)
-		)
-	)
-	(global_label "LED_RX"
-		(shape input)
-		(at 64.77 55.88 270)
-		(fields_autoplaced yes)
-		(effects
-			(font
-				(size 1.27 1.27)
-			)
-			(justify right)
-		)
-		(uuid "c619dd3e-6759-45f7-ad96-65be1425967d")
-		(property "Intersheetrefs" "${INTERSHEET_REFS}"
-			(at 64.77 65.7594 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7044,6 +6890,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 160.02 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 160.02 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "5b961819-0094-4253-91d6-ef4cf440590b")
 		)
@@ -7172,6 +7036,24 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, SMD, 1206"
+			(at 170.18 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 170.18 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 170.18 50.8 0)
 			(effects
 				(font
@@ -7395,76 +7277,6 @@
 	)
 	(symbol
 		(lib_id "PCM_fab:R_0603")
-		(at 80.01 43.18 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "1b95e4dc-aede-47e6-8f80-db0121b0db5b")
-		(property "Reference" "R22"
-			(at 82.55 41.9099 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "1kΩ"
-			(at 82.55 44.4499 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "PCM_fab:R_0603"
-			(at 80.01 43.18 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 80.01 43.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 80.01 43.18 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "a820c20d-5303-4915-bcdc-b507a3aa87c2")
-		)
-		(pin "1"
-			(uuid "3e74817c-5dc9-44c4-bae5-5d4a046aa677")
-		)
-		(instances
-			(project "zero star"
-				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
-					(reference "R22")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "PCM_fab:R_0603")
 		(at 88.9 44.45 0)
 		(unit 1)
 		(exclude_from_sim no)
@@ -7510,6 +7322,24 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 88.9 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 88.9 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 88.9 44.45 0)
 			(effects
 				(font
@@ -7581,6 +7411,24 @@
 		)
 		(property "Description" "128Mbit / 16MiB Serial Flash Memory, Standard/Dual/Quad SPI, 2.7-3.6V, WSON-8"
 			(at 50.8 140.97 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 50.8 168.91 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 50.8 168.91 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7679,6 +7527,24 @@
 		)
 		(property "LCSC Part" "C976032"
 			(at 45.72 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 45.72 109.22 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 45.72 109.22 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -7951,6 +7817,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 124.46 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 124.46 39.37 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "224ea9b2-11e4-4d04-9835-255e44400415")
 		)
@@ -8016,6 +7900,24 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 130.81 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 130.81 45.72 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 130.81 45.72 0)
 			(effects
 				(font
@@ -8094,6 +7996,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 267.97 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 267.97 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "d64ce52c-618c-431f-b7af-4299901afbc6")
 		)
@@ -8157,6 +8077,24 @@
 		)
 		(property "Description" "Light emitting diode, Lite-On Inc. LTST, SMD"
 			(at 104.14 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 104.14 29.21 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 104.14 29.21 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8327,6 +8265,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 137.16 39.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 137.16 39.37 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "5fd714e8-ffa7-4a4c-87f1-627dfc3c7f81")
 		)
@@ -8337,76 +8293,6 @@
 			(project "zero star"
 				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
 					(reference "R16")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "PCM_fab:R_0603")
-		(at 64.77 44.45 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "4684b833-836c-4e6c-a100-bc08846822d5")
-		(property "Reference" "R28"
-			(at 67.31 43.1799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "1kΩ"
-			(at 67.31 45.7199 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "PCM_fab:R_0603"
-			(at 64.77 44.45 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 64.77 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 64.77 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "bb0a8b4b-c4a4-440a-9a96-6775fa1b2e7f")
-		)
-		(pin "1"
-			(uuid "39da7fe3-06e2-4d24-95e2-73d66cd7a6e2")
-		)
-		(instances
-			(project "zero star"
-				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
-					(reference "R28")
 					(unit 1)
 				)
 			)
@@ -8459,6 +8345,24 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, SMD, 1206"
+			(at 215.9 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 215.9 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 215.9 52.07 0)
 			(effects
 				(font
@@ -8537,6 +8441,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 144.78 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 144.78 92.71 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "ed6b81bc-cab3-4be5-afd5-be541421c3e9")
 		)
@@ -8607,6 +8529,24 @@
 		)
 		(property "LCSC Part" "C82351"
 			(at 123.19 139.7 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 123.19 110.49 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 123.19 110.49 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -8765,6 +8705,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 153.67 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 153.67 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "3414ab9b-05e9-46c8-838b-ea932a4e3bbe")
 		)
@@ -8835,6 +8793,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 95.25 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 95.25 102.87 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "7ed9e2fb-cd29-4517-885c-5801aafef09e")
 		)
@@ -8845,143 +8821,6 @@
 			(project "zero star"
 				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
 					(reference "C36")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at 80.01 20.32 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "6a730590-fbe5-4b50-97db-8ac5f7ae4405")
-		(property "Reference" "#PWR048"
-			(at 80.01 24.13 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 80.01 15.24 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 80.01 20.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 80.01 20.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 80.01 20.32 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "10e19cfc-935d-4ab5-acf8-d10a3bef76ba")
-		)
-		(instances
-			(project "zero star"
-				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
-					(reference "#PWR048")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "PCM_fab:LED_0603")
-		(at 59.69 29.21 270)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "71a952ee-9419-423b-9e4e-1827ece42a00")
-		(property "Reference" "D11"
-			(at 62.23 29.5401 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "LED_0603"
-			(at 62.23 32.0801 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "PCM_fab:LED_0603"
-			(at 59.69 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.digikey.com/en/products/detail/harvatek-corporation/B1911USD-20D000114U1930/15519991"
-			(at 59.69 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Light emitting diode, Lite-On Inc. LTST, SMD"
-			(at 59.69 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "36d8ae85-3afe-4bc6-97f3-68362cb38dc2")
-		)
-		(pin "2"
-			(uuid "3c698c7f-18ff-47ae-b498-3e40b7f9fd78")
-		)
-		(instances
-			(project "zero star"
-				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
-					(reference "D11")
 					(unit 1)
 				)
 			)
@@ -9006,7 +8845,7 @@
 				(hide yes)
 			)
 		)
-		(property "Value" "+3.3V"
+		(property "Value" "+3.3VA"
 			(at 212.09 27.94 0)
 			(effects
 				(font
@@ -9107,6 +8946,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 165.1 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 165.1 133.35 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "5f51adfa-ed0d-43d4-8442-b83eb18fa077")
 		)
@@ -9149,6 +9006,7 @@
 					(size 1.27 1.27)
 				)
 				(justify left)
+				(hide yes)
 			)
 		)
 		(property "Footprint" "PCM_fab:LED_0603"
@@ -9171,6 +9029,24 @@
 		)
 		(property "Description" "Light emitting diode, Lite-On Inc. LTST, SMD"
 			(at 69.85 27.94 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 69.85 27.94 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 69.85 27.94 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -9379,6 +9255,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 247.65 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 247.65 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "a9d516a0-bb6d-429b-a1a9-cde2726b349f")
 		)
@@ -9441,6 +9335,24 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 217.17 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 217.17 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 217.17 97.79 0)
 			(effects
 				(font
@@ -9585,6 +9497,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 96.52 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 96.52 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "a15eef36-8cbd-41a7-8e6d-99f0311dbfef")
 		)
@@ -9655,6 +9585,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 161.29 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 161.29 34.29 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "9e9df062-cb6a-4d15-810f-a0713b80a989")
 		)
@@ -9717,6 +9665,24 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, SMD, 1206"
+			(at 93.98 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 93.98 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 93.98 118.11 0)
 			(effects
 				(font
@@ -9861,6 +9827,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 104.14 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 104.14 44.45 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "7b606442-b87c-4169-af2e-2107e0e0db6c")
 		)
@@ -9871,138 +9855,6 @@
 			(project "zero star"
 				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
 					(reference "R27")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at 59.69 21.59 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "aa3e5b5a-ac53-46e7-9c1b-1e7f533c9087")
-		(property "Reference" "#PWR060"
-			(at 59.69 25.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 59.69 16.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 59.69 21.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 59.69 21.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 59.69 21.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "038b3201-f01c-400d-8e76-09d4a722d5ca")
-		)
-		(instances
-			(project "zero star"
-				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
-					(reference "#PWR060")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "power:+3.3V")
-		(at 64.77 21.59 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ac6872be-86ca-47e1-9316-1a5531b8ef6f")
-		(property "Reference" "#PWR059"
-			(at 64.77 25.4 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Value" "+3.3V"
-			(at 64.77 16.51 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-			)
-		)
-		(property "Footprint" ""
-			(at 64.77 21.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" ""
-			(at 64.77 21.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Power symbol creates a global label with name \"+3.3V\""
-			(at 64.77 21.59 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7245eb2b-1bdf-4b10-82fc-51033b6e2f31")
-		)
-		(instances
-			(project "zero star"
-				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
-					(reference "#PWR059")
 					(unit 1)
 				)
 			)
@@ -10063,6 +9915,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 69.85 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 69.85 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "d600ea1d-a92a-488e-9c29-60806125000f")
 		)
@@ -10073,77 +9943,6 @@
 			(project "zero star"
 				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
 					(reference "R21")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "PCM_fab:LED_0603")
-		(at 80.01 27.94 270)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "b2d83f4c-cc10-4c6a-88f2-543c0d410094")
-		(property "Reference" "D6"
-			(at 82.55 28.2701 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "LED_0603"
-			(at 82.55 30.8101 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "PCM_fab:LED_0603"
-			(at 80.01 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.digikey.com/en/products/detail/harvatek-corporation/B1911USD-20D000114U1930/15519991"
-			(at 80.01 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Light emitting diode, Lite-On Inc. LTST, SMD"
-			(at 80.01 27.94 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7bc8b272-4a6f-4952-9063-20ba4671ab22")
-		)
-		(pin "2"
-			(uuid "8466f143-53c3-4d6a-a1f0-b15f6606851f")
-		)
-		(instances
-			(project "zero star"
-				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
-					(reference "D6")
 					(unit 1)
 				)
 			)
@@ -10197,6 +9996,24 @@
 		)
 		(property "Description" "Light emitting diode, Lite-On Inc. LTST, SMD"
 			(at 96.52 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 96.52 29.21 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 96.52 29.21 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -10406,6 +10223,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 88.9 29.21 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 88.9 29.21 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "bc602fa5-3d15-4d31-a022-53f585b56458")
 		)
@@ -10467,6 +10302,24 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, SMD, 1206"
+			(at 27.94 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 27.94 162.56 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 27.94 162.56 0)
 			(effects
 				(font
@@ -10537,6 +10390,24 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, SMD, 1206"
+			(at 88.9 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 88.9 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 88.9 118.11 0)
 			(effects
 				(font
@@ -10681,6 +10552,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 259.08 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 259.08 129.54 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "91bf4d4f-87b8-4d4b-8281-bf0534142a55")
 		)
@@ -10751,6 +10640,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 161.29 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 161.29 50.8 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "2"
 			(uuid "373edf4f-770e-456f-b84b-bb53eef2c557")
 		)
@@ -10761,76 +10668,6 @@
 			(project "zero star"
 				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
 					(reference "R25")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
-		(lib_id "PCM_fab:R_0603")
-		(at 59.69 44.45 0)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "ceb4aeb8-34c7-4bcd-820b-e3b978264dac")
-		(property "Reference" "R29"
-			(at 62.23 43.1799 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "1kΩ"
-			(at 62.23 45.7199 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "PCM_fab:R_0603"
-			(at 59.69 44.45 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "~"
-			(at 59.69 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Resistor"
-			(at 59.69 44.45 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "2"
-			(uuid "0f89de83-03bf-47c2-bd4d-24b72b81bde3")
-		)
-		(pin "1"
-			(uuid "e05695b2-0b44-4498-949c-cfc8e4623b20")
-		)
-		(instances
-			(project "zero star"
-				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
-					(reference "R29")
 					(unit 1)
 				)
 			)
@@ -10883,6 +10720,24 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, SMD, 1206"
+			(at 233.68 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 233.68 91.44 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 233.68 91.44 0)
 			(effects
 				(font
@@ -10953,6 +10808,24 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, SMD, 1206"
+			(at 220.98 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 220.98 52.07 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 220.98 52.07 0)
 			(effects
 				(font
@@ -11097,6 +10970,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 17.78 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 17.78 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "a51004ae-f307-45ed-b71a-abbc5a423b10")
 		)
@@ -11159,6 +11050,24 @@
 			)
 		)
 		(property "Description" "Unpolarized capacitor, SMD, 1206"
+			(at 60.96 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 60.96 128.27 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 60.96 128.27 0)
 			(effects
 				(font
@@ -11249,77 +11158,6 @@
 		)
 	)
 	(symbol
-		(lib_id "PCM_fab:LED_0603")
-		(at 64.77 29.21 270)
-		(mirror x)
-		(unit 1)
-		(exclude_from_sim no)
-		(in_bom yes)
-		(on_board yes)
-		(dnp no)
-		(fields_autoplaced yes)
-		(uuid "d74920bc-e85d-47b2-8e11-a55ad821d0eb")
-		(property "Reference" "D10"
-			(at 67.31 29.5401 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Value" "LED_0603"
-			(at 67.31 32.0801 90)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(justify left)
-			)
-		)
-		(property "Footprint" "PCM_fab:LED_0603"
-			(at 64.77 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Datasheet" "https://www.digikey.com/en/products/detail/harvatek-corporation/B1911USD-20D000114U1930/15519991"
-			(at 64.77 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(property "Description" "Light emitting diode, Lite-On Inc. LTST, SMD"
-			(at 64.77 29.21 0)
-			(effects
-				(font
-					(size 1.27 1.27)
-				)
-				(hide yes)
-			)
-		)
-		(pin "1"
-			(uuid "7fe825f9-bac8-4501-a8a5-3db82e73d1b0")
-		)
-		(pin "2"
-			(uuid "baf330b4-fdac-49da-9444-2ee648b6ef34")
-		)
-		(instances
-			(project "zero star"
-				(path "/839b4004-6a32-43f2-aec7-c75258d13e87/0e165de1-a782-4c32-9b6d-817c14d47f3f"
-					(reference "D10")
-					(unit 1)
-				)
-			)
-		)
-	)
-	(symbol
 		(lib_id "Sensor_Motion:MPU-6050")
 		(at 241.3 114.3 0)
 		(unit 1)
@@ -11347,7 +11185,7 @@
 				(justify left)
 			)
 		)
-		(property "Footprint" "Sensor_Motion:InvenSense_QFN-24_4x4mm_P0.5mm"
+		(property "Footprint" "Package_DFN_QFN:QFN-24-1EP_4x4mm_P0.5mm_EP2.6x2.6mm_ThermalVias"
 			(at 241.3 134.62 0)
 			(effects
 				(font
@@ -11366,6 +11204,24 @@
 			)
 		)
 		(property "Description" "InvenSense 6-Axis Motion Sensor, Gyroscope, Accelerometer, I2C"
+			(at 241.3 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 241.3 114.3 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 241.3 114.3 0)
 			(effects
 				(font
@@ -11407,7 +11263,7 @@
 		(pin "12"
 			(uuid "5b803d08-3301-4fcd-903f-60c9b9c2bc49")
 		)
-		(pin "18"
+		(pin "25"
 			(uuid "6e5b43f1-1f52-4559-b290-b8ba04b29bb5")
 		)
 		(pin "8"
@@ -11510,6 +11366,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 182.88 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 182.88 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "81670432-ef92-4d77-884f-12fa9379468f")
 		)
@@ -11581,6 +11455,24 @@
 		)
 		(property "LCSC Part" "C2684428"
 			(at 238.76 57.15 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 238.76 43.18 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 238.76 43.18 0)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11686,6 +11578,24 @@
 		)
 		(property "Sim.Pins" "1=K 2=A"
 			(at 115.57 29.21 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 115.57 29.21 90)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 115.57 29.21 90)
 			(effects
 				(font
 					(size 1.27 1.27)
@@ -11829,6 +11739,24 @@
 				(hide yes)
 			)
 		)
+		(property "KLC_S3.3" ""
+			(at 175.26 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
+			(at 175.26 118.11 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
 		(pin "1"
 			(uuid "0db8cac3-e616-4643-8a4c-412f93789d21")
 		)
@@ -11957,6 +11885,24 @@
 			)
 		)
 		(property "Description" "Resistor"
+			(at 222.25 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S3.3" ""
+			(at 222.25 97.79 0)
+			(effects
+				(font
+					(size 1.27 1.27)
+				)
+				(hide yes)
+			)
+		)
+		(property "KLC_S4.1" ""
 			(at 222.25 97.79 0)
 			(effects
 				(font
